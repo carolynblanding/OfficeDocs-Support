@@ -15,27 +15,22 @@ appliesto:
 - Skype for Business
 ---
 
-# "You are operating in a split-domain (hybrid) topology" warning when you configure an Office 365 call queue in Skype for Business admin center
+# "Call Queue Agent transfers to other tenant users fail.
 
 ## Symptoms
 
-After you set an Office 365 call queue in the Skype for Business admin center, and you add a distribution group, agents or users are not called. Additionally, when you change the call queue, you may receive the following warning message:
+After you set an Office 365 call queue in the Teams admin center, and you add a distribution group, transfers from agents to other tenant users fail. Skype for Business server logs will display following error:
 
-**Warning: you are operating in a split-domain (hybrid) topology.**
+# "SIPPROXY_E_EPROUTING_MSG_INVALID_EXT_SPLIT_DOMAIN"
 
-**Currently, this application is only supported for pure online tenants.**
-
-**You may proceed with configuration at your own risk.**
 
 ## Cause
 
-This issue occurs because your tenant is configured by using a split domain that is currently not supported for Organizational Auto Attendant (OrgAA) or call queues.
+This issue occurs because your tenant is configured by using a split domain with Office 365, the Resource Account configured for the Call Queue is a custom domain, and DNS federation server records for this domain resolve to on-premises Skype for Business server. When transfers are made the call will route to the on-premises server which needs to be configured correctly to allow this connection. 
 
-However, if you follow the guidance in the "Workaround" section, your call queue may work if all users who are defined as agents are working in Office 365 and are appropriately licensed.
+## Resolution
 
-## Workaround
-
-To work around this issue, follow these steps:
+To resolve this issue, follow these steps:
 
 1. Make sure that the on-premises deployment for Skype for Business and Office 365 is configured correctly for hybrid voice.   
 2. Enable your Edge server to accept calls that are routed from sipfed.resources.lync.com (part of a typical hybrid configuration).   
